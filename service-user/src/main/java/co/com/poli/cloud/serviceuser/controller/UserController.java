@@ -1,5 +1,8 @@
 package co.com.poli.cloud.serviceuser.controller;
 
+import co.com.poli.cloud.serviceuser.commons.Response;
+import co.com.poli.cloud.serviceuser.commons.ResponseBuilder;
+import co.com.poli.cloud.serviceuser.entities.User;
 import co.com.poli.cloud.serviceuser.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,10 +21,10 @@ public class UserController {
 
     @GetMapping
     public Response findAll() {
-        List<Coustomer> coustomer = coustomerService.findAll();
-        if (coustomer.isEmpty()) {
-            return responseBuilder.failed(coustomer);
+        List<User> user = userService.findAll();
+        if (user.isEmpty()) {
+            return responseBuilder.failed(user);
         }
-        return responseBuilder.success(coustomer);
+        return responseBuilder.success(user);
     }
 }
