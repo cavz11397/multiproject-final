@@ -1,10 +1,10 @@
-package co.com.poli.cloud.serviceuser.controller;
+package co.com.poli.cloud.servicemovie.controller;
 
-import co.com.poli.cloud.serviceuser.commons.ErrorMessage;
-import co.com.poli.cloud.serviceuser.commons.Response;
-import co.com.poli.cloud.serviceuser.commons.ResponseBuilder;
-import co.com.poli.cloud.serviceuser.entities.User;
-import co.com.poli.cloud.serviceuser.services.UserService;
+import co.com.poli.cloud.servicemovie.commons.ErrorMessage;
+import co.com.poli.cloud.servicemovie.commons.Response;
+import co.com.poli.cloud.servicemovie.commons.ResponseBuilder;
+import co.com.poli.cloud.servicemovie.entities.Movie;
+import co.com.poli.cloud.servicemovie.services.MovieService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -18,48 +18,48 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value = "/users")
+@RequestMapping(value = "/movies")
 @RequiredArgsConstructor
-public class UserController {
+public class MovieController {
 
-    private final UserService userService;
+    private final MovieService movieService;
     private final ResponseBuilder responseBuilder;
 
     @GetMapping
     public Response findAll() {
-        List<User> user = userService.findAll();
-        if (user.isEmpty()) {
-            return responseBuilder.failed(user);
+        List<Movie> movie = movieService.findAll();
+        if (movie.isEmpty()) {
+            return responseBuilder.failed(movie);
         }
-        return responseBuilder.success(user);
+        return responseBuilder.success(movie);
     }
 
     @GetMapping("/{id}")
     public Response findById(@PathVariable("id") Long id ){
-        User user = userService.findById(id);
-        if(user == null){
+        Movie movie = movieService.findById(id);
+        if(movie == null){
             return responseBuilder.failed(null);
         }
-        return responseBuilder.success(user);
+        return responseBuilder.success(movie);
     }
 
     @PostMapping
-    public Response save(@Valid @RequestBody User user, BindingResult result) {
+    public Response save(@Valid @RequestBody Movie movie, BindingResult result) {
         if (result.hasErrors()) {
             return responseBuilder.failed(this.formatMessage((result)));
         }
-        userService.save(user);
-        return responseBuilder.success(user);
+        movieService.save(movie);
+        return responseBuilder.success(movie);
     }
 
     @DeleteMapping("/{id}")
     public Response delete(@PathVariable("id") Long id) {
-        User user = userService.findById(id);
-        if (user == null) {
+        Movie movie = movieService.findById(id);
+        if (movie == null) {
             return responseBuilder.failed(null);
         }
-        userService.delete(user);
-        return responseBuilder.success(user);
+        movieService.delete(movie);
+        return responseBuilder.success(movie);
     }
 
     public String formatMessage(BindingResult result) {
@@ -83,4 +83,5 @@ public class UserController {
         }
         return json;
     }
+
 }

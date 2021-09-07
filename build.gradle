@@ -37,6 +37,9 @@ subprojects {
 	}
 
 	dependencies {
+
+		api project('co.com.poli.cloud:commons')
+
 		compileOnly 'org.projectlombok:lombok'
 
 		developmentOnly 'org.springframework.boot:spring-boot-devtools'
@@ -61,5 +64,10 @@ subprojects {
 		enabled = true
 	}
 }
+
+bootJar {
+	enabled = false
+}
+
 
 

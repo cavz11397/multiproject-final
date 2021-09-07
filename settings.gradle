@@ -1,5 +1,6 @@
 rootProject.name = 'multiprojectfinal'
 
+include 'commons'
 include 'service-config'
 include 'service-register'
 include 'service-gateway'

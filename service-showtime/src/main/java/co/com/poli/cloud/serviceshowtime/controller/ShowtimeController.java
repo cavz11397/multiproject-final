@@ -1,10 +1,10 @@
-package co.com.poli.cloud.serviceuser.controller;
+package co.com.poli.cloud.serviceshowtime.controller;
 
-import co.com.poli.cloud.serviceuser.commons.ErrorMessage;
-import co.com.poli.cloud.serviceuser.commons.Response;
-import co.com.poli.cloud.serviceuser.commons.ResponseBuilder;
-import co.com.poli.cloud.serviceuser.entities.User;
-import co.com.poli.cloud.serviceuser.services.UserService;
+import co.com.poli.cloud.serviceshowtime.commons.ErrorMessage;
+import co.com.poli.cloud.serviceshowtime.commons.Response;
+import co.com.poli.cloud.serviceshowtime.commons.ResponseBuilder;
+import co.com.poli.cloud.serviceshowtime.entities.Showtime;
+import co.com.poli.cloud.serviceshowtime.services.ShowtimeService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -18,48 +18,48 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value = "/users")
+@RequestMapping(value = "/showtimes")
 @RequiredArgsConstructor
-public class UserController {
+public class ShowtimeController {
 
-    private final UserService userService;
+    private final ShowtimeService showtimeService;
     private final ResponseBuilder responseBuilder;
 
     @GetMapping
     public Response findAll() {
-        List<User> user = userService.findAll();
-        if (user.isEmpty()) {
-            return responseBuilder.failed(user);
+        List<Showtime> showtime = showtimeService.findAll();
+        if (showtime.isEmpty()) {
+            return responseBuilder.failed(showtime);
         }
-        return responseBuilder.success(user);
+        return responseBuilder.success(showtime);
     }
 
     @GetMapping("/{id}")
     public Response findById(@PathVariable("id") Long id ){
-        User user = userService.findById(id);
-        if(user == null){
+        Showtime showtime = showtimeService.findById(id);
+        if(showtime == null){
             return responseBuilder.failed(null);
         }
-        return responseBuilder.success(user);
+        return responseBuilder.success(showtime);
     }
 
     @PostMapping
-    public Response save(@Valid @RequestBody User user, BindingResult result) {
+    public Response save(@Valid @RequestBody Showtime showtime, BindingResult result) {
         if (result.hasErrors()) {
             return responseBuilder.failed(this.formatMessage((result)));
         }
-        userService.save(user);
-        return responseBuilder.success(user);
+        showtimeService.save(showtime);
+        return responseBuilder.success(showtime);
     }
 
     @DeleteMapping("/{id}")
     public Response delete(@PathVariable("id") Long id) {
-        User user = userService.findById(id);
-        if (user == null) {
+        Showtime showtime = showtimeService.findById(id);
+        if (showtime == null) {
             return responseBuilder.failed(null);
         }
-        userService.delete(user);
-        return responseBuilder.success(user);
+        showtimeService.delete(showtime);
+        return responseBuilder.success(showtime);
     }
 
     public String formatMessage(BindingResult result) {
