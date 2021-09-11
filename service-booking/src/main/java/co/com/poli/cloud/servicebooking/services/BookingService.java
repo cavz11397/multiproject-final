@@ -14,4 +14,6 @@ public interface BookingService {
 
     Booking findById(Long id);
 
+    Booking findByUserId(Long userId);
+
 }

@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -31,5 +32,14 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public Movie findById(Long id) {
         return movieRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<Movie> findByRating(Long rating) {
+        List<Movie> movies = movieRepository.findAll()
+                .stream()
+                .filter(item -> item.getRating() == rating)
+                .collect(Collectors.toList());
+        return movies;
     }
 }

@@ -3,6 +3,8 @@ package co.com.poli.cloud.servicemovie.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.util.Objects;
 
 @Getter
@@ -24,6 +26,8 @@ public class Movie {
     @Column(name = "director", nullable = false)
     private String director;
 
+    @Min(1)
+    @Max(10)
     @Column(name = "rating", nullable = false)
     private int rating;
 

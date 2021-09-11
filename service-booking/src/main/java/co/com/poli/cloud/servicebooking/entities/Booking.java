@@ -1,11 +1,13 @@
 package co.com.poli.cloud.servicebooking.entities;
 
-import co.com.poli.cloud.servicebooking.model.Movie;
 import co.com.poli.cloud.servicebooking.model.Showtime;
 import co.com.poli.cloud.servicebooking.model.User;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.Valid;
+import java.util.List;
 
 @Getter
 @Setter
@@ -33,6 +35,10 @@ public class Booking {
     @Transient
     private Showtime showtime;
 
-    private Movie[] movies;
+    @Valid
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "booking_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private List<Bookingmovies> items;
 
 }

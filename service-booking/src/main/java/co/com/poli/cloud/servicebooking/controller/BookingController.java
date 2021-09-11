@@ -9,11 +9,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,25 +42,34 @@ public class BookingController {
         }
         return responseBuilder.success(booking);
     }
-//
-//    @PostMapping
-//    public Response save(@Valid @RequestBody Showtime showtime, BindingResult result) {
-//        if (result.hasErrors()) {
-//            return responseBuilder.failed(this.formatMessage((result)));
-//        }
-//        showtimeService.save(showtime);
-//        return responseBuilder.success(showtime);
-//    }
-//
-//    @DeleteMapping("/{id}")
-//    public Response delete(@PathVariable("id") Long id) {
-//        Showtime showtime = showtimeService.findById(id);
-//        if (showtime == null) {
-//            return responseBuilder.failed(null);
-//        }
-//        showtimeService.delete(showtime);
-//        return responseBuilder.success(showtime);
-//    }
+
+    @GetMapping("/userid/{userId}")
+    public Response findByUserId(@PathVariable("userId") Long userId ){
+        Booking booking = bookingService.findByUserId(userId);
+        if(booking == null){
+            return responseBuilder.failed(null);
+        }
+        return responseBuilder.success(booking);
+    }
+
+    @PostMapping
+    public Response save(@Valid @RequestBody Booking booking, BindingResult result) {
+        if (result.hasErrors()) {
+            return responseBuilder.failed(this.formatMessage((result)));
+        }
+        bookingService.save(booking);
+        return responseBuilder.success(booking);
+    }
+
+    @DeleteMapping("/{id}")
+    public Response delete(@PathVariable("id") Long id) {
+        Booking booking = bookingService.findById(id);
+        if (booking == null) {
+            return responseBuilder.failed(null);
+        }
+        bookingService.delete(booking);
+        return responseBuilder.success(booking);
+    }
 
     public String formatMessage(BindingResult result) {
         List<Map<String, String>> errors = result.getFieldErrors().stream()

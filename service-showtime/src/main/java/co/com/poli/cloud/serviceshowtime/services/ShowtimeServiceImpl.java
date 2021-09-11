@@ -31,6 +31,12 @@ public class ShowtimeServiceImpl implements ShowtimeService {
 
     @Override
     public List<Showtime> findAll() {
+        List<Showtime> items =showtimeRepository.findAll();
+        items.stream()
+                .map(showtime -> {
+                    return showtime = findById(showtime.getId());
+                })
+                .collect(Collectors.toList());
         return showtimeRepository.findAll();
     }
 
@@ -41,13 +47,7 @@ public class ShowtimeServiceImpl implements ShowtimeService {
         List<ShowtimeItems> itemList = showtime.getItems()
                 .stream()
                 .map(showtimeItem -> {
-                    System.out.println("movieid");
-                    System.out.println(showtimeItem.getMovieId());
-                    System.out.println("respuesta");
-                    System.out.println(movieClient.findById(showtimeItem.getMovieId()).getData());
                     Movie movie = modelMapper.map(movieClient.findById(showtimeItem.getMovieId()).getData(), Movie.class);
-                    System.out.println("movie");
-                    System.out.println(movie);
                     showtimeItem.setMovie(movie);
                     return showtimeItem;
                 })
@@ -55,14 +55,4 @@ public class ShowtimeServiceImpl implements ShowtimeService {
         return showtimeRepository.findById(id).orElse(null);
     }
 
-    /*@Override
-    public Showtime findByMovieId(Long movieId) {
-        Showtime showtime = showtimeRepository.findByMovieId(movieId);
-        ModelMapper modelMapper = new ModelMapper();
-        Movie movie  = modelMapper.map(movieClient.findById(showtime.getMovieId()).getData(),Movie.class);
-        List<Movie> lista = null;
-        lista.add(movie);
-        showtime.setMovies(lista);
-        return showtimeRepository.findByMovieId(movieId);
-    }*/
 }

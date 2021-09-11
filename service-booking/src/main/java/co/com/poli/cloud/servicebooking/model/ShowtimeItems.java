@@ -3,11 +3,10 @@ package co.com.poli.cloud.servicebooking.model;
 import lombok.Data;
 
 @Data
-public class Movie {
+public class ShowtimeItems {
 
     private Long id;
-    private String title;
-    private String director;
-    private int rating;
+    private Long movieId;
+    private Movie movie;
 
 }

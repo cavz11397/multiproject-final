@@ -43,6 +43,15 @@ public class MovieController {
         return responseBuilder.success(movie);
     }
 
+    @GetMapping("rating/{rating}")
+    public Response findByRating(@PathVariable("rating") Long rating ){
+        List<Movie> listMovies = movieService.findByRating(rating);
+        if(listMovies == null){
+            return responseBuilder.failed(null);
+        }
+        return responseBuilder.success(listMovies);
+    }
+
     @PostMapping
     public Response save(@Valid @RequestBody Movie movie, BindingResult result) {
         if (result.hasErrors()) {

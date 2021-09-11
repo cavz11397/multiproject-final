@@ -23,7 +23,7 @@ INSERT INTO movies(id,title,director, rating)
 VALUES(8,'The Expendables ','Sylvester Stallone',7);
 
 INSERT INTO movies(id,title,director, rating)
-VALUES(9,'World war z','Marc forster',7);
+VALUES(9,'The Conjuring','James Wan',8);
 
 INSERT INTO movies(id,title,director, rating)
-VALUES(9,'World war z','Marc forster',7);
+VALUES(10,'The Avengers','Joss Whedon',9);

@@ -12,4 +12,6 @@ public interface MovieService {
     List<Movie> findAll();
 
     Movie findById(Long id);
+
+    List<Movie> findByRating(Long rating);
 }
