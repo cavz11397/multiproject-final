@@ -34,6 +34,18 @@ public class BookingController {
         return responseBuilder.success(booking);
     }
 
+    @GetMapping("/bookingsId/{movieId}")
+    public Response findAllIds(@PathVariable("movieId") Long movieId ) {
+        Boolean bookingsIds = bookingService.listOfIds(movieId);
+        return responseBuilder.success(bookingsIds);
+    }
+
+    @GetMapping("/bookingsUserId/{userId}")
+    public Response findAllUserIds(@PathVariable("userId") Long userId ) {
+        Boolean bookingsIds = bookingService.listOfUserIds(userId);
+        return responseBuilder.success(bookingsIds);
+    }
+
     @GetMapping("/{id}")
     public Response findById(@PathVariable("id") Long id ){
         Booking booking = bookingService.findById(id);

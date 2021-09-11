@@ -56,10 +56,13 @@ public class UserController {
     public Response delete(@PathVariable("id") Long id) {
         User user = userService.findById(id);
         if (user == null) {
-            return responseBuilder.failed(null);
+            return responseBuilder.failed("no existe el user");
         }
-        userService.delete(user);
-        return responseBuilder.success(user);
+        if (userService.delete(user)) {
+            return responseBuilder.success("deleted user");
+        } else {
+            return responseBuilder.failed("Booking associate");
+        }
     }
 
     public String formatMessage(BindingResult result) {

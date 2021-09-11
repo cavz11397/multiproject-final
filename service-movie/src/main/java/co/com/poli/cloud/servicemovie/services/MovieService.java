@@ -7,7 +7,7 @@ import java.util.List;
 public interface MovieService {
     void save(Movie movie);
 
-    void delete(Movie movie);
+    Boolean delete(Movie movie);
 
     List<Movie> findAll();
 

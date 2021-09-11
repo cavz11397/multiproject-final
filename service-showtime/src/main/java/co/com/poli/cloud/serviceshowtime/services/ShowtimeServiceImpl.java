@@ -65,4 +65,15 @@ public class ShowtimeServiceImpl implements ShowtimeService {
         return showtimeRepository.findById(showtime1.getId()).orElse(null);
     }
 
+    @Override
+    public Boolean listOfIds(Long movieId) {
+        List<Showtime> showtimes = findAll();
+        Boolean devolver = showtimes.stream()
+                .anyMatch(item -> item.getItems()
+                        .stream()
+                        .anyMatch(movie -> movie.getMovieId() == movieId)
+                );
+        return devolver;
+    }
+
 }

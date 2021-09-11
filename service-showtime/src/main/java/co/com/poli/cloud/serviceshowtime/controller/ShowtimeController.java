@@ -43,6 +43,12 @@ public class ShowtimeController {
         return responseBuilder.success(showtime);
     }
 
+    @GetMapping("/showtimesId/{movieId}")
+    public Response findAllIds(@PathVariable("movieId") Long movieId ) {
+        Boolean bookingsIds = showtimeService.listOfIds(movieId);
+        return responseBuilder.success(bookingsIds);
+    }
+
     @PostMapping
     public Response save(@Valid @RequestBody Showtime showtime, BindingResult result) {
         if (result.hasErrors()) {

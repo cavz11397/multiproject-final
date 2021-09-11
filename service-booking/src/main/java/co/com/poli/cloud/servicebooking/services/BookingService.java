@@ -16,4 +16,8 @@ public interface BookingService {
 
     Booking findByUserId(Long userId);
 
+    Boolean listOfIds(Long movieId);
+
+    Boolean listOfUserIds(Long userId);
+
 }

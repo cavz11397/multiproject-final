@@ -1,8 +1,11 @@
 package co.com.poli.cloud.servicemovie.services;
 
+import co.com.poli.cloud.servicemovie.client.BookingClient;
+import co.com.poli.cloud.servicemovie.client.ShowtimeClient;
 import co.com.poli.cloud.servicemovie.entities.Movie;
 import co.com.poli.cloud.servicemovie.repositories.MovieRepository;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +16,8 @@ import java.util.stream.Collectors;
 public class MovieServiceImpl implements MovieService {
 
     private final MovieRepository movieRepository;
+    private final BookingClient bookingClient;
+    private final ShowtimeClient showtimeClient;
 
     @Override
     public void save(Movie movie) {
@@ -20,8 +25,18 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public void delete(Movie movie) {
-        movieRepository.delete(movie);
+    public Boolean delete(Movie movie) {
+        ModelMapper modelMapper = new ModelMapper();
+
+        String bookingFlag = modelMapper.map(bookingClient.findAllIds(movie.getId()).getData().toString(), String.class);
+        String showtimeFlag = modelMapper.map(showtimeClient.findAllIds(movie.getId()).getData().toString(), String.class);
+
+        if (!bookingFlag.equalsIgnoreCase("true") && !showtimeFlag.equalsIgnoreCase("true")) {
+            movieRepository.delete(movie);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override

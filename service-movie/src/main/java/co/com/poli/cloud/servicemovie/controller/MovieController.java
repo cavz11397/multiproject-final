@@ -35,18 +35,18 @@ public class MovieController {
     }
 
     @GetMapping("/{id}")
-    public Response findById(@PathVariable("id") Long id ){
+    public Response findById(@PathVariable("id") Long id) {
         Movie movie = movieService.findById(id);
-        if(movie == null){
+        if (movie == null) {
             return responseBuilder.failed(null);
         }
         return responseBuilder.success(movie);
     }
 
     @GetMapping("rating/{rating}")
-    public Response findByRating(@PathVariable("rating") Long rating ){
+    public Response findByRating(@PathVariable("rating") Long rating) {
         List<Movie> listMovies = movieService.findByRating(rating);
-        if(listMovies == null){
+        if (listMovies == null) {
             return responseBuilder.failed(null);
         }
         return responseBuilder.success(listMovies);
@@ -65,10 +65,13 @@ public class MovieController {
     public Response delete(@PathVariable("id") Long id) {
         Movie movie = movieService.findById(id);
         if (movie == null) {
-            return responseBuilder.failed(null);
+            return responseBuilder.failed("No existe la pelicula");
         }
-        movieService.delete(movie);
-        return responseBuilder.success(movie);
+        if (movieService.delete(movie)) {
+            return responseBuilder.success("deleted movie");
+        } else {
+            return responseBuilder.failed("Booking or showtime associate");
+        }
     }
 
     public String formatMessage(BindingResult result) {

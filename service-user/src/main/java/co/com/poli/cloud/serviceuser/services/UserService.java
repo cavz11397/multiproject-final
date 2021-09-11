@@ -7,7 +7,7 @@ import java.util.List;
 public interface UserService {
     void save(User user);
 
-    void delete(User user);
+    Boolean delete(User user);
 
     List<User> findAll();
 

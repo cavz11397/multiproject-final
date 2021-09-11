@@ -72,9 +72,28 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public Booking findByUserId(Long userId) {
         Booking booking = bookingRepository.findByUserId(userId);
-        if(booking != null){
-            return  findById(booking.getId());
+        if (booking != null) {
+            return findById(booking.getId());
         }
         return null;
+    }
+
+    @Override
+    public Boolean listOfIds(Long movieId) {
+        List<Booking> bookings = findAll();
+        Boolean devolver = bookings.stream()
+                .anyMatch(item -> item.getItems()
+                        .stream()
+                        .anyMatch(movie -> movie.getMovieId() == movieId)
+                );
+        return devolver;
+    }
+
+    @Override
+    public Boolean listOfUserIds(Long userId) {
+        List<Booking> bookings = findAll();
+        Boolean devolver = bookings.stream()
+                .anyMatch(item -> item.getUserId()==userId);
+        return devolver;
     }
 }

@@ -1,8 +1,10 @@
 package co.com.poli.cloud.serviceuser.services;
 
+import co.com.poli.cloud.serviceuser.client.BookingClient;
 import co.com.poli.cloud.serviceuser.entities.User;
 import co.com.poli.cloud.serviceuser.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,6 +14,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final BookingClient bookingClient;
 
     @Override
     public void save(User user) {
@@ -19,8 +22,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void delete(User user) {
-        userRepository.delete(user);
+    public Boolean delete(User user) {
+        ModelMapper modelMapper = new ModelMapper();
+
+        String bookingFlag = modelMapper.map(bookingClient.findAllUserIds(user.getId()).getData().toString(), String.class);
+
+        if (!bookingFlag.equalsIgnoreCase("true")) {
+            userRepository.delete(user);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override

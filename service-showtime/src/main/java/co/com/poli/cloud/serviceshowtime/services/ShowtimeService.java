@@ -15,6 +15,8 @@ public interface ShowtimeService {
 
     Showtime update(Showtime showtime);
 
+    Boolean listOfIds(Long movieId);
+
 //    Showtime findByMovieId(Long movieId);
 
 }
