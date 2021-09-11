@@ -55,4 +55,14 @@ public class ShowtimeServiceImpl implements ShowtimeService {
         return showtimeRepository.findById(id).orElse(null);
     }
 
+    @Override
+    public Showtime update(Showtime showtime) {
+        Showtime showtime1 = showtimeRepository.findById(showtime.getId()).orElse(null);
+        showtime1.setId(showtime.getId());
+        showtime1.setDate(showtime.getDate());
+        showtime1.setItems(showtime.getItems());
+        showtimeRepository.save(showtime1);
+        return showtimeRepository.findById(showtime1.getId()).orElse(null);
+    }
+
 }

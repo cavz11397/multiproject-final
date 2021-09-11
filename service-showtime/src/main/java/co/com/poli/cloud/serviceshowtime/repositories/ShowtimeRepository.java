@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface ShowtimeRepository extends JpaRepository<Showtime, Long> {
 
 //    Showtime findByMovieId (Long movieId);
+    
 }

@@ -13,6 +13,8 @@ public interface ShowtimeService {
 
     Showtime findById(Long id);
 
+    Showtime update(Showtime showtime);
+
 //    Showtime findByMovieId(Long movieId);
 
 }

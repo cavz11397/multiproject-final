@@ -62,6 +62,11 @@ public class ShowtimeController {
         return responseBuilder.success(showtime);
     }
 
+    @PutMapping()
+    public Response updateStudent(@RequestBody Showtime showtime) {
+        return responseBuilder.success(showtimeService.update(showtime));
+    }
+
     public String formatMessage(BindingResult result) {
         List<Map<String, String>> errors = result.getFieldErrors().stream()
                 .map(err -> {

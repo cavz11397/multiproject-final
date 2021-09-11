@@ -36,8 +36,8 @@ public class MovierServiceTest {
 
     @Test
     public void when_findById_return_movie(){
-        Movie product = movieService.findById(11L);
-        Assertions.assertThat(product.getTitle()).isEqualTo("Inglourious Basterds");
+        Movie movie = movieService.findById(11L);
+        Assertions.assertThat(movie.getTitle()).isEqualTo("Inglourious Basterds");
     }
 
 }
